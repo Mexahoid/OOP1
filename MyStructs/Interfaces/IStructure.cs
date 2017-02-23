@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyStructs
+namespace MyStructs.Interfaces
 {
     /// <summary>
     /// Базовый интерфейс для стеков и очередей.
     /// </summary>
     /// <typeparam name="T">Тип элемента.</typeparam>
-    public interface IStructurable<T> : IEnumerable<T>
+    public interface IStructure<T> : IEnumerable<T>
     {
         /// <summary>
         /// Очищает стек.
@@ -26,11 +26,11 @@ namespace MyStructs
         /// <summary>
         /// Свойство для получения количества элементов в структуре.
         /// </summary>
-        int Count { get; set; }
+        int Count { get; }
 
         /// <summary>
         /// Свойство для получения заполненности структуры.
         /// </summary>
-        bool isEmpty { get; set; }
+        bool IsEmpty { get; }
     }
 }
