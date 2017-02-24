@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyStructs.Main;
+using MyStructs.Interfaces;
 
 namespace MyStructs.Stacks
 {
@@ -11,46 +13,20 @@ namespace MyStructs.Stacks
     ///  Класс стека на основе связанного списка.
     /// </summary>
     /// <typeparam name="T">Тип элементов списка.</typeparam>
-	public class LinkedStack<T> : Interfaces.IStack<T>
+	public class LinkedStack<T> : IStack<T>
     {
-        /// <summary>
-        /// Возвращает размер стека.
-        /// </summary>
-        public int Count
+        private int count;
+        private Node<T> head;
+
+        public LinkedStack(IList<T> Input)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            count = 0;
+            int Count = Input.Count;
+            for (int i = 0; i < Count; i++, count++)
+                Push(Input[i]);
         }
 
-        /// <summary>
-        /// Возвращает логическое значение в зависимости от наличия первого элемента.
-        /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return Count == 0;
-            }
-        }
-
-        /// <summary>
-        /// Очищает структуру.
-        /// </summary>
-        public void Clear()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Возвращает ссылку на первый элемент структуры.
-        /// </summary>
-        /// <returns></returns>
-        public T Peek()
-        {
-            throw new NotImplementedException();
-        }
+        #region Основные методы стека
 
         /// <summary>
         /// Выталкивает первый элемент из структуры.
@@ -58,7 +34,12 @@ namespace MyStructs.Stacks
         /// <returns></returns>
         public T Pop()
         {
-            throw new NotImplementedException();
+            if (IsEmpty)
+                throw new StackException.EmptyStackException();
+            T Data = head.Data;
+            head = head.NextNode;
+            count--;
+            return Data;
         }
 
         /// <summary>
@@ -67,25 +48,57 @@ namespace MyStructs.Stacks
         /// <param name="value">Значение элемента.</param>
         public void Push(T value)
         {
-            throw new NotImplementedException();
+            count++;
+            head = new Node<T>(value, head);
         }
+
+        #endregion
+
+        #region Основные методы интерфейса IStructure
+
+        /// <summary>
+        /// Очищает структуру.
+        /// </summary>
+        public void Clear() => head = null;
+
+        /// <summary>
+        /// Возвращает ссылку на первый элемент структуры.
+        /// </summary>
+        /// <returns></returns>
+        public T Peek() => head.Data;
+
+        /// <summary>
+        /// Возвращает размер очереди.
+        /// </summary>
+        public int Count
+        {
+            get => count;
+        }
+
+        /// <summary>
+        /// Возвращает логическое значение в зависимости от наличия первого элемента.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get => head == null;
+        }
+
+        #endregion
+
+        #region Методы IEnumerable
 
         /// <summary>
         /// Возвращает переборщика.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return (IEnumerator<T>)this;
-        }
+        public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)this;
 
         /// <summary>
         /// Возвращает переборщика.
         /// </summary>
         /// <returns></returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (IEnumerator)this;
-        }
+        IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)this;
+
+        #endregion
     }
 }

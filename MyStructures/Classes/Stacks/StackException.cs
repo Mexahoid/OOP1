@@ -9,7 +9,11 @@ namespace MyStructs.Stacks
     /// <summary>
     /// Класс исключений для стеков.
     /// </summary>
-    class StackException
+    public class StackException
     {
+        public class EmptyStackException : Exception
+        {
+            public override string Message => "Исключение заполненности. Стек пуст.";
+        }
     }
 }

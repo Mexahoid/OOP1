@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyStructs.Main;
+using MyStructs.Interfaces;
 
 namespace MyStructs.Queues
 {
@@ -11,36 +13,20 @@ namespace MyStructs.Queues
     /// Класс очереди с приоритетами объектов.
     /// </summary>
     /// <typeparam name="T">Тип элементов очереди.</typeparam>
-    public class PriorityQueue<T> : Interfaces.IQueue<T> where T : IComparable
+    public class PriorityQueue<T> : IQueue<T> where T : IComparable
     {
-        /// <summary>
-        /// Возвращает размер очереди.
-        /// </summary>
-        public int Count
+        private int count;
+        private Node<T> tail;
+        private Node<T> head;
+
+        public PriorityQueue()
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+
         }
 
-        /// <summary>
-        /// Возвращает логическое значение в зависимости от наличия первого элемента.
-        /// </summary>
-        public bool IsEmpty
+        public PriorityQueue(IEnumerable<T> Input)
         {
-            get
-            {
-                return Count == 0;
-            }
-        }
 
-        /// <summary>
-        /// Очищает структуру.
-        /// </summary>
-        public void Clear()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -61,31 +47,51 @@ namespace MyStructs.Queues
             throw new NotImplementedException();
         }
 
+        #region Основные методы интерфейса IStructure
+
+        /// <summary>
+        /// Очищает структуру.
+        /// </summary>
+        public void Clear() => head = tail = null;
+
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek()
+        public T Peek() => head.Data;
+
+        /// <summary>
+        /// Возвращает размер очереди.
+        /// </summary>
+        public int Count
         {
-            throw new NotImplementedException();
+            get => count;
         }
+
+        /// <summary>
+        /// Возвращает логическое значение в зависимости от наличия первого элемента.
+        /// </summary>
+        public bool IsEmpty
+        {
+            get => head == null;
+        }
+
+        #endregion
+        
+        #region Методы IEnumerable
 
         /// <summary>
         /// Возвращает переборщика.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<T> GetEnumerator()
-        {
-            return (IEnumerator<T>)this;
-        }
+        public IEnumerator<T> GetEnumerator() => (IEnumerator<T>)this;
 
         /// <summary>
         /// Возвращает переборщика.
         /// </summary>
         /// <returns></returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return (IEnumerator)this;
-        }
+        IEnumerator IEnumerable.GetEnumerator() => (IEnumerator)this;
+
+        #endregion
     }
 }
