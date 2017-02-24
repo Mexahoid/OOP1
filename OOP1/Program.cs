@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MyStructs;
+using MyStructs.Stacks;
 
 namespace OOP1
 {
@@ -11,9 +11,9 @@ namespace OOP1
     {
         static void Main(string[] args)
         {
-            MyStructs.Stacks.ArrayStack<int> Arr;
+            ArrayStack<int> Arr;
             int[] Asd = new int[] { 10, 14, 13, 25, 45, 46,67,89,97 };
-            Arr = new MyStructs.Stacks.ArrayStack<int>(Asd);
+            Arr = new ArrayStack<int>(Asd);
             int C = Arr.Count + 1;
             for (int i = 0; i < C; i++)
             {
@@ -21,13 +21,33 @@ namespace OOP1
                 {
                     Console.WriteLine(Arr.Pop());
                 }
-                catch (MyStructs.Stacks.StackException.EmptyStackException e)
+                catch (StackException.EmptyStackException e)
                 {
                     Console.WriteLine(e.Message);
                     break;
                 }
             }
+            List<string> Lst = new List<string>(new string[] {"сос", "сас", "кек", "лол", "мда", "сес" });
+            LinkedStack<string> Lt = new LinkedStack<string>(Lst);
+            C = Lt.Count + 1;
+            for (int i = 0; i < C; i++)
+            {
+                try
+                {
+                    Console.WriteLine(Lt.Pop());
+                }
+                catch (StackException.EmptyStackException e)
+                {
+                    Console.WriteLine(e.Message);
+                    break;
+                }
+            }
+            int[] a = new int[1];
+            Queue<int> q = new Queue<int>(a);
+            Queue<string> s = new Queue<string>(Lst);
+            Console.WriteLine(new object());
             Console.ReadLine();
+            
         }
     }
 }

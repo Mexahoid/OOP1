@@ -22,7 +22,7 @@ namespace MyStructs.Stacks
         {
             count = 0;
             int Count = Input.Count;
-            for (int i = 0; i < Count; i++, count++)
+            for (int i = 0; i < Count; i++)
                 Push(Input[i]);
         }
 

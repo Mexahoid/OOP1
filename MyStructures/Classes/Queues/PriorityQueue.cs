@@ -21,12 +21,13 @@ namespace MyStructs.Queues
 
         public PriorityQueue()
         {
-
+            count = 0;
+            head = tail = null;
         }
 
         public PriorityQueue(IEnumerable<T> Input)
         {
-
+            T d = tail.Data;
         }
 
         /// <summary>
