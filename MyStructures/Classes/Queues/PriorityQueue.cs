@@ -15,19 +15,19 @@ namespace MyStructs.Queues
     /// <typeparam name="T">Тип элементов очереди.</typeparam>
     public class PriorityQueue<T> : IQueue<T> where T : IComparable
     {
-        private int count;
-        private Node<T> tail;
-        private Node<T> head;
+        private int _count;
+        private Node<T> _head;
 
         public PriorityQueue()
         {
-            count = 0;
-            head = tail = null;
+            _count = 0;
+            _head = null;
         }
 
-        public PriorityQueue(IEnumerable<T> Input)
+        public PriorityQueue(IEnumerable<T> Input) : base()
         {
-            T d = tail.Data;
+            foreach (T element in Input)
+                Enqueue(element);
         }
 
         /// <summary>
@@ -36,7 +36,12 @@ namespace MyStructs.Queues
         /// <returns></returns>
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            Node<T> OutOne = _head;
+            if (_count-- == 1)
+                _head = null;
+            else
+                _head = _head.NextNode;
+            return OutOne.Data;
         }
 
         /// <summary>
@@ -45,7 +50,28 @@ namespace MyStructs.Queues
         /// <param name="value">Значение элемента.</param>
         public void Enqueue(T value)
         {
-            throw new NotImplementedException();
+            Node<T> NewNode = new Node<T>(value, null);
+            if (_count++ == 0)
+                _head = NewNode;
+            else
+            {
+                if (_head.Data.CompareTo(value) > -1)
+                {
+                    NewNode.NextNode = _head;
+                    _head = NewNode;
+                }
+                else
+                {
+                    Node<T> Temp = _head;
+                    while (Temp.NextNode != null)
+                        if (Temp.NextNode.Data.CompareTo(value) > -1)
+                            break;
+                        else
+                            Temp = Temp.NextNode;
+                    NewNode.NextNode = Temp.NextNode;
+                    Temp.NextNode = NewNode;
+                }
+            }
         }
 
         #region Основные методы интерфейса IStructure
@@ -53,20 +79,24 @@ namespace MyStructs.Queues
         /// <summary>
         /// Очищает структуру.
         /// </summary>
-        public void Clear() => head = tail = null;
+        public void Clear()
+        {
+            _count = 0;
+            _head = null;
+        }
 
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek() => head.Data;
+        public T Peek() => _head.Data;
 
         /// <summary>
         /// Возвращает размер очереди.
         /// </summary>
         public int Count
         {
-            get => count;
+            get => _count;
         }
 
         /// <summary>
@@ -74,11 +104,11 @@ namespace MyStructs.Queues
         /// </summary>
         public bool IsEmpty
         {
-            get => head == null;
+            get => _head == null;
         }
 
         #endregion
-        
+
         #region Методы IEnumerable
 
         /// <summary>

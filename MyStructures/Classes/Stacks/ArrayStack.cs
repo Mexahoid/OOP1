@@ -15,13 +15,19 @@ namespace MyStructs.Stacks
     /// <typeparam name="T">Тип элементов массива.</typeparam>
     public class ArrayStack<T> : IStack<T>
     {
-        private int count;
-        private Node<T> head;
+        private int _count;
+        private T[] _array;
 
-        public ArrayStack(Array Input)
+        public ArrayStack()
         {
-            count = 0;
-            int Count = Input.Length;
+            _count = 0;
+            _array = new T[0];
+        }
+
+        public ArrayStack(IEnumerable Input) : base()
+        {
+            if (Input == null)
+                throw new StackException.NullCollectionException();
             foreach (T element in Input)
                 Push(element);
         }
@@ -34,11 +40,10 @@ namespace MyStructs.Stacks
         /// <returns></returns>
         public T Pop()
         {
-            if (IsEmpty)
+            if (_count == 0)
                 throw new StackException.EmptyStackException();
-            T Data = head.Data;
-            head = head.NextNode;
-            count--;
+            T Data = _array[--_count];              //Берем с конца
+            Array.Resize(ref _array, _count);
             return Data;
         }
 
@@ -48,8 +53,8 @@ namespace MyStructs.Stacks
         /// <param name="value">Значение элемента.</param>
         public void Push(T value)
         {
-            count++;
-            head = new Node<T>(value, head);
+            Array.Resize(ref _array, ++_count);
+            _array[_count - 1] = value;               
         }
 
         #endregion
@@ -59,20 +64,29 @@ namespace MyStructs.Stacks
         /// <summary>
         /// Очищает структуру.
         /// </summary>
-        public void Clear() => head = null;
+        public void Clear()
+        {
+            _array = new T[0];
+            _count = 0;
+        }
 
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek() => head.Data;
+        public T Peek()
+        {
+            if (_count == 0)
+                throw new StackException.EmptyStackException();
+            return _array[0];
+        }
 
         /// <summary>
         /// Возвращает размер очереди.
         /// </summary>
         public int Count
         {
-            get => count;
+            get => _count;
         }
 
         /// <summary>
@@ -80,7 +94,7 @@ namespace MyStructs.Stacks
         /// </summary>
         public bool IsEmpty
         {
-            get => head == null;
+            get => _count == 0;
         }
 
         #endregion

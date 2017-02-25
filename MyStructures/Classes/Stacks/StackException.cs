@@ -15,5 +15,9 @@ namespace MyStructs.Stacks
         {
             public override string Message => "Исключение заполненности. Стек пуст.";
         }
+        public class NullCollectionException : Exception
+        {
+            public override string Message => "Исключение входного параметра. Пустая коллекция.";
+        }
     }
 }

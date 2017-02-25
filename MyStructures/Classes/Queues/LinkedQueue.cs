@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MyStructs.Main;
 using MyStructs.Interfaces;
 
@@ -15,14 +11,20 @@ namespace MyStructs.Queues
     /// <typeparam name="T">Тип элементов списка.</typeparam>
     public class LinkedQueue<T> : IQueue<T>
     {
-        private int count;
-        private Node<T> tail;
-        private Node<T> head;
+        private int _count;
+        private Node<T> _head;
 
-        public LinkedQueue(IList<T> Input)
+        public LinkedQueue()
         {
-
+            _count = 0;
+            _head = null;
         }
+
+         public LinkedQueue(IEnumerable Input) : base()
+         {
+             foreach (T element in Input)
+                 Enqueue(element);
+         }
 
         #region Основные методы IQueue
 
@@ -32,12 +34,11 @@ namespace MyStructs.Queues
         /// <returns></returns>
         public T Dequeue()
         {
-            Node<T> OutOne = head;
-            if (count == 1)
-                head = tail = null;
+            Node<T> OutOne = _head;
+            if (_count-- == 1)
+                _head = null;
             else
-                head = head.NextNode;
-            count--;
+                _head = _head.NextNode;
             return OutOne.Data;
         }
 
@@ -47,13 +48,16 @@ namespace MyStructs.Queues
         /// <param name="value">Значение элемента.</param>
         public void Enqueue(T value)
         {
-            count++;
             Node<T> NewNode = new Node<T>(value, null);
-            if (IsEmpty)
-                head = NewNode;
+            if (_count++ == 0)
+                _head = NewNode;
             else
-                tail.NextNode = NewNode;
-            tail = NewNode;
+            {
+                Node<T> Temp = _head;
+                while (Temp.NextNode != null)
+                    Temp = Temp.NextNode;
+                Temp.NextNode = NewNode;
+            }
         }
 
         #endregion
@@ -63,20 +67,24 @@ namespace MyStructs.Queues
         /// <summary>
         /// Очищает структуру.
         /// </summary>
-        public void Clear() => head = tail = null;
+        public void Clear()
+        {
+            _head = null;
+            _count = 0;
+        }
 
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek() => head.Data;
+        public T Peek() => _head.Data;
 
         /// <summary>
         /// Возвращает размер очереди.
         /// </summary>
         public int Count
         {
-            get => count;
+            get => _count;
         }
 
         /// <summary>
@@ -84,7 +92,7 @@ namespace MyStructs.Queues
         /// </summary>
         public bool IsEmpty
         {
-            get => head == null;
+            get => _head == null;
         }
 
         #endregion

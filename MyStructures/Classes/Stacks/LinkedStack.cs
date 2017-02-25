@@ -15,15 +15,19 @@ namespace MyStructs.Stacks
     /// <typeparam name="T">Тип элементов списка.</typeparam>
 	public class LinkedStack<T> : IStack<T>
     {
-        private int count;
-        private Node<T> head;
+        private int _count;
+        private Node<T> _head;
 
-        public LinkedStack(IList<T> Input)
+        public LinkedStack()
         {
-            count = 0;
-            int Count = Input.Count;
-            for (int i = 0; i < Count; i++)
-                Push(Input[i]);
+            _count = 0;
+            _head = null;
+        }
+
+        public LinkedStack(IEnumerable Input) : base()
+        {
+            foreach (T element in Input)
+                Push(element);
         }
 
         #region Основные методы стека
@@ -36,9 +40,9 @@ namespace MyStructs.Stacks
         {
             if (IsEmpty)
                 throw new StackException.EmptyStackException();
-            T Data = head.Data;
-            head = head.NextNode;
-            count--;
+            T Data = _head.Data;
+            _head = _head.NextNode;
+            _count--;
             return Data;
         }
 
@@ -48,8 +52,8 @@ namespace MyStructs.Stacks
         /// <param name="value">Значение элемента.</param>
         public void Push(T value)
         {
-            count++;
-            head = new Node<T>(value, head);
+            _count++;
+            _head = new Node<T>(value, _head);
         }
 
         #endregion
@@ -59,20 +63,24 @@ namespace MyStructs.Stacks
         /// <summary>
         /// Очищает структуру.
         /// </summary>
-        public void Clear() => head = null;
+        public void Clear()
+        {
+            _head = null;
+            _count = 0;
+        }
 
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek() => head.Data;
+        public T Peek() => _head.Data;
 
         /// <summary>
         /// Возвращает размер очереди.
         /// </summary>
         public int Count
         {
-            get => count;
+            get => _count;
         }
 
         /// <summary>
@@ -80,7 +88,7 @@ namespace MyStructs.Stacks
         /// </summary>
         public bool IsEmpty
         {
-            get => head == null;
+            get => _head == null;
         }
 
         #endregion

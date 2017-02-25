@@ -12,9 +12,20 @@ namespace MainTestForm
 {
     public partial class MainForm : Form
     {
+        private ArrayStackTest AS;
+        private LinkedStackTest LS;
+        private LinkedQueueTest LQ;
+        private ArrayQueueTest AQ;
+        private PriorityQueueTest PQ;
+
         public MainForm()
         {
             InitializeComponent();
+            AS = new ArrayStackTest(CtrlTPAS);
+            LS = new LinkedStackTest(CtrlTPLS);
+            LQ = new LinkedQueueTest(CtrlTPLQ);
+            AQ = new ArrayQueueTest(CtrlTPAQ);
+            PQ = new PriorityQueueTest(CtrlTPPQ);
         }
     }
 }

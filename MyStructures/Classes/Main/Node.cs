@@ -15,12 +15,12 @@ namespace MyStructs.Main
         /// <summary>
         /// Данные узла.
         /// </summary>
-        private T data;
+        private T _data;
 
         /// <summary>
         /// Указатель на следующий узел.
         /// </summary>
-        private Node<T> nextNode;
+        private Node<T> _nextNode;
 
         /// <summary>
         /// Конструктор узла.
@@ -30,17 +30,17 @@ namespace MyStructs.Main
         public Node(T Data, Node<T> Next)
         {
             this.Data = Data;
-            NextNode = Next;
+            _nextNode = Next;
         }
 
         /// <summary>
         /// Свойство поля данных.
         /// </summary>
-        public T Data { get => data; set => data = value; }
+        public T Data { get => _data; set => _data = value; }
 
         /// <summary>
         /// Свойство поля ссылки на следующий узел.
         /// </summary>
-        public Node<T> NextNode { get => nextNode; set => nextNode = value; }
+        public Node<T> NextNode { get => _nextNode; set => _nextNode = value; }
     }
 }

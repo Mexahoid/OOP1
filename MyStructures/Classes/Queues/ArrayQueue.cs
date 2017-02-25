@@ -15,14 +15,19 @@ namespace MyStructs.Queues
     /// <typeparam name="T">Тип элементов массива.</typeparam>
     public class ArrayQueue<T> : IQueue<T>
     {
-        private int count;
-        private Node<T> tail;
-        private Node<T> head;
+        private int _count;
+        private T[] _array;
 
-        public ArrayQueue(Array Input)
+        public ArrayQueue()
         {
-            tail = null;
-            head = null;
+            _count = 0;
+            _array = new T[0];
+        }
+
+        public ArrayQueue(IEnumerable Input) : base()
+        {
+            foreach (T element in Input)
+                Enqueue(element);
         }
 
         #region Основные методы IQueue
@@ -33,13 +38,18 @@ namespace MyStructs.Queues
         /// <returns></returns>
         public T Dequeue()
         {
-            Node<T> OutOne = head;
-            if (count == 1)
-                head = tail = null;
+
+            T Data = _array[0];
+            if (_count-- == 1)
+                _array = new T[0];
             else
-                head = head.NextNode;
-            count--;
-            return OutOne.Data;
+            {
+                T[] tempArr = new T[_count];
+                for (int i = 1; i < _count + 1; i++)
+                    tempArr[i - 1] = _array[i];
+                _array = tempArr;
+            }
+            return Data;
         }
 
         /// <summary>
@@ -48,13 +58,8 @@ namespace MyStructs.Queues
         /// <param name="value">Значение элемента.</param>
         public void Enqueue(T value)
         {
-            count++;
-            Node<T> NewNode = new Node<T>(value, null);
-            if (IsEmpty)
-                head = NewNode;
-            else
-                tail.NextNode = NewNode;
-            tail = NewNode;
+            Array.Resize(ref _array, ++_count);
+            _array[_count - 1] = value;
         }
 
         #endregion
@@ -64,20 +69,24 @@ namespace MyStructs.Queues
         /// <summary>
         /// Очищает структуру.
         /// </summary>
-        public void Clear() => head = tail = null;
+        public void Clear()
+        {
+            _array = new T[0];
+            _count = 0;
+        }
 
         /// <summary>
         /// Возвращает ссылку на первый элемент структуры.
         /// </summary>
         /// <returns></returns>
-        public T Peek() => head.Data;
+        public T Peek() => _array[0];
 
         /// <summary>
         /// Возвращает размер очереди.
         /// </summary>
         public int Count
         {
-            get => count;
+            get => _count;
         }
 
         /// <summary>
@@ -85,7 +94,7 @@ namespace MyStructs.Queues
         /// </summary>
         public bool IsEmpty
         {
-            get => head == null;
+            get => _count == 0;
         }
 
         #endregion
