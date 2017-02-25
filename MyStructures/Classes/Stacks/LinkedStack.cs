@@ -52,8 +52,16 @@ namespace MyStructs.Stacks
         /// <param name="value">Значение элемента.</param>
         public void Push(T value)
         {
-            _count++;
-            _head = new Node<T>(value, _head);
+            Node<T> NewNode = new Node<T>(value, null);
+            if (_count++ == 0)
+                _head = NewNode;
+            else
+            {
+                Node<T> Temp = _head;
+                while (Temp.NextNode != null)
+                    Temp = Temp.NextNode;
+                Temp.NextNode = NewNode;
+            }
         }
 
         #endregion
