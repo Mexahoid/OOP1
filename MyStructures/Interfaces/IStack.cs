@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyStructs.Interfaces
+﻿namespace MyStructs.Interfaces
 {
     /// <summary>
     /// Базовый интерфейс для всех стеков.
