@@ -17,8 +17,10 @@ namespace OOP1
         protected Random _sich;
         protected StreamWriter _sw;
 
-        protected StackTest() =>
+        protected StackTest()
+        {
             _sich = new Random(DateTime.Now.Millisecond);
+        }
 
         protected void Randomize()
         {

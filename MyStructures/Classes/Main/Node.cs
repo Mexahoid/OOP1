@@ -36,11 +36,11 @@ namespace MyStructs.Main
         /// <summary>
         /// Свойство поля данных.
         /// </summary>
-        public T Data { get => _data; set => _data = value; }
+        public T Data { get { return _data; } set { _data = value; } }
 
         /// <summary>
         /// Свойство поля ссылки на следующий узел.
         /// </summary>
-        public Node<T> NextNode { get => _nextNode; set => _nextNode = value; }
+        public Node<T> NextNode { get { return _nextNode; } set { _nextNode = value; } }
     }
 }

@@ -17,7 +17,10 @@ namespace OOP1
         protected Random _sich;
         protected StreamWriter _sw;
 
-        protected QueueTest() => _sich = new Random(DateTime.Now.Millisecond);
+        protected QueueTest()
+        {
+            _sich = new Random(DateTime.Now.Millisecond);
+        }
 
         protected void Randomize()
         {

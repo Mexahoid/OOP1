@@ -86,7 +86,7 @@ namespace MyStructs.Queues
         /// </summary>
         public int Count
         {
-            get => _count;
+            get { return _count; }
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace MyStructs.Queues
         /// </summary>
         public bool IsEmpty
         {
-            get => _count == 0;
+            get { return _count == 0; }
         }
 
         #endregion
