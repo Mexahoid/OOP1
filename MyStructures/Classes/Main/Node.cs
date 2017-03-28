@@ -29,7 +29,7 @@ namespace MyStructs.Main
         /// <param name="Next"></param>
         public Node(T Data, Node<T> Next)
         {
-            this.Data = Data;
+            _data = Data;
             _nextNode = Next;
         }
 
