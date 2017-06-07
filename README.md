@@ -4,7 +4,7 @@
 
 •	IStack<T>: IEnumerable<T> – базовый интерфейс для всех стеков;
 
-  o	методы:
+  •	методы:
   
     	void Push(T value);
     
@@ -28,7 +28,7 @@
 
 •	IQueue<T>: IEnumerable<T> – базовый интерфейс для всех очередей;
 
-  o	методы:
+  •	методы:
   
     	void Enqueue(T value);
     
@@ -38,7 +38,7 @@
     
     	T Peek();
     
-  o	свойства:
+  •	свойства:
   
     	int Count;
     
